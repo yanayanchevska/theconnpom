@@ -1,12 +1,13 @@
 import { Page, Locator,  expect } from '@playwright/test';
-export class Header {
-  readonly page: Page;
+import { Methods } from './methods/methods';
+export class Header extends Methods {
+  //readonly page: Page;
   readonly logoLink: Locator;
   readonly logoPrimary: Locator;
   readonly logoTransparent: Locator;
   readonly accountLink: Locator;
   readonly searchLink: Locator;
-  readonly searchInput: Locator;
+//  readonly searchInput: Locator;
   readonly cartLink: Locator;
   readonly cartCount: Locator;
   readonly homeTab: Locator;
@@ -21,7 +22,7 @@ export class Header {
   readonly callTab: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.logoLink = page.locator('[class="Header__LogoLink"]');
     this.logoPrimary = page.locator(
       '[class="Header__LogoImage Header__LogoImage--primary"]'
@@ -33,7 +34,7 @@ export class Header {
       .locator('[class="Heading Link Link--primary Text--subdued u-h8"]')
       .nth(0);
     this.searchLink = page.locator('a[data-action="toggle-search"]').nth(0);
-    this.searchInput = page.locator('input[name="q"]');
+  //  this.searchInput = page.locator('input[name="q"]');
     this.cartLink = page.locator(
       'a[href="/cart"][data-action="open-drawer"][data-drawer-id="sidebar-cart"].Heading.u-h6'
     );
@@ -57,66 +58,90 @@ export class Header {
   }
 
   async checkLogoLink() {
-    await expect(this.logoLink).toBeVisible();
-    await expect(this.logoLink).toHaveAttribute("href", "/");
+    await this.checkVisibility(this.logoLink);
+    await this.checkAttribute(this.logoLink,'href', '/');
+   // await expect(this.logoLink).toBeVisible();
+   // await expect(this.logoLink).toHaveAttribute("href", "/");
   }
 
   async checkLogoPrimary() {
-    await expect(this.logoPrimary).toBeVisible();
-    await expect(this.logoPrimary).toHaveAttribute("width", "250");
-    await expect(this.logoPrimary).toHaveAttribute(
-      "alt",
-      "The Connected Shop Logo"
-    );
+    await this.checkVisibility(this.logoPrimary);
+    await this.checkAttribute(this.logoPrimary, 'width', '250');
+    await this.checkAttribute(this.logoPrimary, 'alt', 'The Connected Shop Logo');
+   // await expect(this.logoPrimary).toBeVisible();
+   // await expect(this.logoPrimary).toHaveAttribute("width", "250");
+   // await expect(this.logoPrimary).toHaveAttribute(
+    //   "alt",
+    //   "The Connected Shop Logo"
+   // );
   }
 
   async checkLogoTransparent() {
-    await expect(this.logoTransparent).toBeVisible();
-    await expect(this.logoPrimary).toHaveAttribute("width", "250");
-    await expect(this.logoPrimary).toHaveAttribute(
-      "alt",
-      "The Connected Shop Logo"
-    );
+    await this.checkVisibility(this.logoTransparent);
+    await this.checkAttribute(this.logoTransparent, 'width', '250');
+    // await expect(this.logoTransparent).toBeVisible();
+    // await expect(this.logoPrimary).toHaveAttribute("width", "250");
+    // await expect(this.logoPrimary).toHaveAttribute(
+    //   "alt",
+    //   "The Connected Shop Logo"
+    // );
   }
 
   async checkAccounLink() {
-    await expect(this.accountLink).toBeVisible();
-    await expect(this.accountLink).toHaveAttribute("href", "/account");
-    await expect(this.accountLink).toHaveText("Account");
+    await this.checkVisibility(this.accountLink);
+    await this.checkAttribute(this.accountLink, 'href', '/account');
+    await this.checkText(this.accountLink, 'Account');
+    // await expect(this.accountLink).toBeVisible();
+    // await expect(this.accountLink).toHaveAttribute("href", "/account");
+    // await expect(this.accountLink).toHaveText("Account");
   }
 
-  async checkSearchInput() {
-    await expect(this.searchInput).toBeVisible();
-    await expect(this.searchInput).toBeEditable();
-    await expect(this.searchInput).toBeEnabled();
-    await expect(this.searchInput).toHaveAttribute("placeholder", "Search...");
-  }
+  // async checkSearchInput() {
+  //   await this.checkVisibility(this.searchInput);
+  //   await this.checkAttribute(this.searchInput, 'placeholder', 'Search...');
+  //   await expect(this.searchInput).toBeEditable();
+  //   await expect(this.searchInput).toBeEnabled();
+  // await expect(this.searchInput).toBeVisible();
+  // await expect(this.searchInput).toHaveAttribute("placeholder", "Search...");
+  //}
 
   async checkSearchLink() {
-    await expect(this.searchLink).toBeVisible();
-    await expect(this.searchLink).toHaveAttribute("href", "/search");
-    await expect(this.searchLink).toHaveAttribute(
-      "data-action",
-      "toggle-search"
-    );
-    await expect(this.searchLink).toHaveText("Search");
+    await this.checkVisibility(this.searchLink);
+    await this.checkAttribute(this.searchLink, 'href', '/search');
+    await this.checkAttribute(this.searchLink, 'data-action', 'toggle-search');
+    await this.checkText(this.searchLink, 'Search');
+
+    // await expect(this.searchLink).toBeVisible();
+    // await expect(this.searchLink).toHaveAttribute("href", "/search");
+    // await expect(this.searchLink).toHaveAttribute("data-action", "toggle-search");
+    // await expect(this.searchLink).toHaveText("Search");
   }
 
+  async clickSearchLink() {
+    await this.searchLink.click();
+  }
+
+
   async checkCartLink() {
-    await expect(this.cartLink).toBeVisible();
-    await expect(this.cartLink).toHaveAttribute(
-      "data-drawer-id",
-      "sidebar-cart"
-    );
-    await expect(this.cartLink).toHaveAttribute("href", "/cart");
-    await expect(this.cartLink).toHaveAttribute("data-drawer-id", "sidebar");
-    await expect(this.cartLink).toHaveAttribute("aria-label", "Open cart");
+    await this.checkVisibility(this.cartLink);
+    await this.checkAttribute(this.cartLink, 'data-drawer-id', 'sidebar-cart');
+    await this.checkAttribute(this.cartLink, 'href', '/cart');
+    await this.checkAttribute(this.cartLink, 'data-drawer-id', 'sidebar');
+    await this.checkAttribute(this.cartLink, 'aria-label', 'Open cart');
+
+    // await expect(this.cartLink).toBeVisible();
+    // await expect(this.cartLink).toHaveAttribute("data-drawer-id","sidebar-cart");
+    // await expect(this.cartLink).toHaveAttribute("href", "/cart");
+    // await expect(this.cartLink).toHaveAttribute("data-drawer-id", "sidebar");
+    // await expect(this.cartLink).toHaveAttribute("aria-label", "Open cart");
   }
 
   async checkCartCount() {
-    await expect(this.cartCount).toBeVisible();
-    const cartCountNumb = await this.cartCount.textContent();
-    // expect(cartCountNumb).toBeGreaterThanOrEqual(0);
+    await this.checkVisibility(this.cartCount);
+
+    //await expect(this.cartCount).toBeVisible();
+    //const cartCountNumb = await this.cartCount.textContent();
+    //expect(cartCountNumb).toBeGreaterThanOrEqual(0);
   }
 
   async checkCartCount2() {
@@ -124,52 +149,82 @@ export class Header {
   }
 
   async checkHomeTab() {
-    await expect(this.homeTab).toBeVisible();
-    await expect(this.collectionsTab).toHaveText("Home");
+    await this.checkVisibility(this.homeTab);
+    await this.checkText(this.homeTab, 'Home');
+
+    // await expect(this.homeTab).toBeVisible();
+    // await expect(this.collectionsTab).toHaveText("Home");
   }
 
   async checkOnSaleTab() {
-    await expect(this.onSaleTab).toBeVisible();
-    await expect(this.collectionsTab).toHaveText("On Sale");
+    await this.checkVisibility(this.onSaleTab);
+    await this.checkText(this.onSaleTab, 'On Sale');
+
+    // await expect(this.onSaleTab).toBeVisible();
+    // await expect(this.collectionsTab).toHaveText("On Sale");
   }
 
   async checkCollectionsTab() {
-    await expect(this.collectionsTab).toBeVisible();
-    await expect(this.collectionsTab).toHaveText("Collections");
+    await this.checkVisibility(this.collectionsTab);
+    await this.checkText(this.collectionsTab, 'Collections');
+
+    // await expect(this.collectionsTab).toBeVisible();
+    // await expect(this.collectionsTab).toHaveText("Collections");
   }
 
   async checkPersonalTab() {
-    await expect(this.personalTab).toBeVisible();
-    await expect(this.personalTab).toHaveText("Personal");
+    await this.checkVisibility(this.personalTab);
+    await this.checkText(this.personalTab, 'Personal');
+
+    // await expect(this.personalTab).toBeVisible();
+    // await expect(this.personalTab).toHaveText("Personal");
   }
 
   async checkBusinessesTab() {
-    await expect(this.businessesTab).toBeVisible();
-    await expect(this.businessesTab).toHaveText("Businesses");
+    await this.checkVisibility(this.personalTab);
+    await this.checkText(this.businessesTab, 'Businesses');
+
+    // await expect(this.businessesTab).toBeVisible();
+    // await expect(this.businessesTab).toHaveText("Businesses");
   }
 
   async checktechTalkTab() {
-    await expect(this.techTalkTab).toBeVisible();
-    await expect(this.techTalkTab).toHaveText("Tech Talk");
+    await this.checkVisibility(this.techTalkTab);
+    await this.checkText(this.techTalkTab, 'Tech Talk');
+
+    // await expect(this.techTalkTab).toBeVisible();
+    // await expect(this.techTalkTab).toHaveText("Tech Talk");
   }
 
   async checkaboutUsTab() {
-    await expect(this.aboutUsTab).toBeVisible();
-    await expect(this.aboutUsTab).toHaveText("About us");
+    await this.checkVisibility(this.aboutUsTab);
+    await this.checkText(this.aboutUsTab, 'About us');
+
+    // await expect(this.aboutUsTab).toBeVisible();
+    // await expect(this.aboutUsTab).toHaveText("About us");
   }
 
   async checkfaqTab() {
-    await expect(this.faqTab).toBeVisible();
-    await expect(this.faqTab).toHaveText("FAQ");
+    await this.checkVisibility(this.faqTab);
+    await this.checkText(this.faqTab, 'FAQ');
+
+    // await expect(this.faqTab).toBeVisible();
+    // await expect(this.faqTab).toHaveText("FAQ");
   }
 
   async checkContactTab() {
-    await expect(this.contactTab).toBeVisible();
-    await expect(this.contactTab).toHaveText("Contact");
+    await this.checkVisibility(this.contactTab);
+    await this.checkText(this.contactTab, 'Contact');
+
+    // await expect(this.contactTab).toBeVisible();
+    // await expect(this.contactTab).toHaveText("Contact");
   }
 
   async checkcallTab() {
-    await expect(this.callTab).toBeVisible();
-    //    await expect(this.callTab).toHaveText("📞 Call");
+    await this.checkVisibility(this.callTab);
+    await this.checkText(this.callTab, "📞 Call");
+
+    // await expect(this.callTab).toBeVisible();
+    // await expect(this.callTab).toHaveText("📞 Call");
   }
 }

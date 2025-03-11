@@ -1,15 +1,14 @@
 import { Page, expect } from '@playwright/test';
-export class HomePage {
-
-    readonly page:Page;
+import { Methods } from './methods/methods';
+export class HomePage extends Methods {
 
     constructor(page:Page) {
-        this.page=page;
+        super(page);
 
    }
 async open () {
 
-    await this.page.goto('/')
+    await this.page.goto('/');
 }
 
 async checkURL () {

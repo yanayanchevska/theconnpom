@@ -11,6 +11,10 @@ async open () {
     await this.page.goto('/');
 }
 
+async contactTabOpen () {
+    await this.page.goto('/pages/contact-us');
+}
+
 async checkURL () {
 
     await expect(this.page).toHaveURL('https://theconnectedshop.com/');

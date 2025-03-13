@@ -1,7 +1,6 @@
 import {Page, Locator, expect } from '@playwright/test';
 import { Methods } from './methods/methods';
 export class Search extends Methods {
-  readonly page: Page;
   readonly searchForm: Locator;
   readonly searchInput: Locator;
   readonly searchIcon: Locator;
@@ -24,7 +23,9 @@ export class Search extends Methods {
     this.searchResult = page
       .locator('[class="Heading Text--subdued u-h7"]')
       .nth(0);
-    this.searchResultFirst = page.locator('[class="jdgm-prev-badge__text"]');
+    this.searchResultFirst = page
+      .locator('[class="jdgm-prev-badge__text"]')
+      .nth(0);
     this.searchResultFirstNegative = page
       .locator('[class="Segment__Content"]')
       .nth(0);
